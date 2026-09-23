@@ -8,6 +8,9 @@ import net.minecraft.world.level.Level;
 
 public class ArcaneRifleItem extends Item {
 
+    public static final int MAGAZINE_SIZE = 30;
+    public static final int MAX_RANGE = 100;
+
     public ArcaneRifleItem(Properties properties) {
         super(properties);
     }
