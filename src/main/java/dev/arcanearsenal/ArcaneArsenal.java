@@ -11,5 +11,6 @@ public class ArcaneArsenal implements ModInitializer {
 @Override
 public void onInitialize() {
     LOGGER.info("Arcane Arsenal weapon system starting...");
+    ModItems.initialize();
 }
 }
