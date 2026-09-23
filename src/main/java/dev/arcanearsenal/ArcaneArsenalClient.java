@@ -5,6 +5,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 
 import net.minecraft.client.KeyMapping;
 import net.minecraft.resources.Identifier;
@@ -40,8 +41,12 @@ public class ArcaneArsenalClient implements ClientModInitializer {
                     return;
                 }
 
+                ClientPlayNetworking.send(
+                        new ReloadRiflePayload()
+                );
+
                 ArcaneArsenal.LOGGER.info(
-                        "Arcane Arsenal reload key pressed."
+                        "Arcane Rifle reload requested."
                 );
             }
         });
