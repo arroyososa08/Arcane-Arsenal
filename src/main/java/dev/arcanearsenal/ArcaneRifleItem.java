@@ -18,9 +18,12 @@ public class ArcaneRifleItem extends Item {
     public static final int MAGAZINE_SIZE = 30;
     public static final int MAX_RANGE = 100;
 
-    // Starting damage for the Arcane Rifle.
-    // We can balance this later.
+    // 8 damage = 4 hearts before armor/effects.
     public static final float DAMAGE = 8.0F;
+
+    // Minecraft normally runs at 20 ticks per second.
+    // 4 ticks = maximum of about 5 shots per second.
+    public static final int FIRE_COOLDOWN_TICKS = 4;
 
     public ArcaneRifleItem(Properties properties) {
         super(properties);
@@ -39,12 +42,18 @@ public class ArcaneRifleItem extends Item {
             return InteractionResult.SUCCESS;
         }
 
+        // Do not fire while the rifle is cooling down.
+        if (player.getCooldowns().isOnCooldown(rifle)) {
+            return InteractionResult.FAIL;
+        }
+
         int loadedAmmo = rifle.getOrDefault(
                 ModComponents.LOADED_AMMO,
                 0
         );
 
         if (loadedAmmo <= 0) {
+
             ArcaneArsenal.LOGGER.info(
                     "{} tried to fire an empty Arcane Rifle.",
                     player.getName().getString()
@@ -59,13 +68,19 @@ public class ArcaneRifleItem extends Item {
                 loadedAmmo - 1
         );
 
-        // Start of the shot: player's eye position.
+        // Apply fire-rate cooldown.
+        player.getCooldowns().addCooldown(
+                rifle,
+                FIRE_COOLDOWN_TICKS
+        );
+
+        // Start of the shot.
         Vec3 start = player.getEyePosition();
 
         // Direction the player is looking.
         Vec3 direction = player.getLookAngle();
 
-        // End of the shot: 100 blocks away.
+        // Maximum shot distance.
         Vec3 end = start.add(
                 direction.scale(MAX_RANGE)
         );
@@ -86,8 +101,8 @@ public class ArcaneRifleItem extends Item {
                         MAX_RANGE * MAX_RANGE
                 );
 
-        // Also check for blocks so we cannot shoot
-        // an entity through a wall.
+        // Check for blocks so the rifle cannot
+        // hit entities through walls.
         HitResult blockHit = level.clip(
                 new net.minecraft.world.level.ClipContext(
                         start,
@@ -112,7 +127,8 @@ public class ArcaneRifleItem extends Item {
 
             if (entityDistance <= blockDistance) {
 
-                Entity target = entityHit.getEntity();
+                Entity target =
+                        entityHit.getEntity();
 
                 target.hurt(
                         player.damageSources().playerAttack(player),
