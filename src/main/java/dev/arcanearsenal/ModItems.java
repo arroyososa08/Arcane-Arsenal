@@ -16,6 +16,11 @@ public class ModItems {
             ArcaneRifleItem::new,
             new Item.Properties().stacksTo(1)
     );
+    public static final Item ARCANE_RIFLE_AMMO = register(
+        "arcane_rifle_ammo",
+        ArcaneRifleAmmoItem::new,
+        new Item.Properties().stacksTo(64)
+    );
 
     public static <T extends Item> T register(
             String name,
