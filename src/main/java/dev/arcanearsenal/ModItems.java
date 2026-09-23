@@ -1,23 +1,37 @@
 package dev.arcanearsenal;
 
-import net.minecraft.item.Item;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
+import java.util.function.Function;
+
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.Item;
 
 public class ModItems {
 
     public static final Item ARCANE_RIFLE = register(
             "arcane_rifle",
-            new Item(new Item.Settings())
+            Item::new,
+            new Item.Properties().stacksTo(1)
     );
 
-    private static Item register(String name, Item item) {
-        return Registry.register(
+    public static <T extends Item> T register(
+            String name,
+            Function<Item.Properties, T> itemFactory,
+            Item.Properties properties
+    ) {
+        ResourceKey<Item> itemKey = ResourceKey.create(
                 Registries.ITEM,
-                Identifier.of(ArcaneArsenal.MOD_ID, name),
-                item
+                Identifier.fromNamespaceAndPath(ArcaneArsenal.MOD_ID, name)
         );
+
+        T item = itemFactory.apply(properties.setId(itemKey));
+
+        Registry.register(BuiltInRegistries.ITEM, itemKey, item);
+
+        return item;
     }
 
     public static void initialize() {
