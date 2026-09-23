@@ -8,7 +8,12 @@
   "license": "All-Rights-Reserved",
   "environment": "*",
   "entrypoints": {
-    "main": ["dev.arcanearsenal.ArcaneArsenal"]
+    "main": [
+      "dev.arcanearsenal.ArcaneArsenal"
+    ],
+    "client": [
+      "dev.arcanearsenal.ArcaneArsenalClient"
+    ]
   },
   "depends": {
     "fabricloader": ">=0.19.3",
