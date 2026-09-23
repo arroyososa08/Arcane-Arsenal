@@ -14,7 +14,9 @@ public class ModItems {
     public static final Item ARCANE_RIFLE = register(
             "arcane_rifle",
             ArcaneRifleItem::new,
-            new Item.Properties().stacksTo(1)
+            new Item.Properties()
+                .stacksTo(1)
+                .component(ModComponents.LOADED_AMMO, 0)
     );
     public static final Item ARCANE_RIFLE_AMMO = register(
         "arcane_rifle_ammo",
