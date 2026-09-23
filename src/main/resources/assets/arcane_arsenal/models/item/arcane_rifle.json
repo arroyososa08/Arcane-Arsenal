@@ -1,0 +1,197 @@
+{
+  "textures": {
+    "particle": "minecraft:block/black_concrete"
+  },
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [0, 90, -35],
+      "translation": [0, 1.5, -2],
+      "scale": [0.65, 0.65, 0.65]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [0, -90, 35],
+      "translation": [0, 1.5, -2],
+      "scale": [0.65, 0.65, 0.65]
+    },
+    "firstperson_righthand": {
+      "rotation": [0, 90, -20],
+      "translation": [1.2, 2.5, -2],
+      "scale": [0.8, 0.8, 0.8]
+    },
+    "firstperson_lefthand": {
+      "rotation": [0, -90, 20],
+      "translation": [1.2, 2.5, -2],
+      "scale": [0.8, 0.8, 0.8]
+    },
+    "gui": {
+      "rotation": [25, 145, 0],
+      "translation": [0, 0, 0],
+      "scale": [0.75, 0.75, 0.75]
+    },
+    "ground": {
+      "rotation": [0, 0, 0],
+      "translation": [0, 2, 0],
+      "scale": [0.5, 0.5, 0.5]
+    },
+    "fixed": {
+      "rotation": [0, 90, 0],
+      "translation": [0, 0, 0],
+      "scale": [0.65, 0.65, 0.65]
+    }
+  },
+  "elements": [
+    {
+      "name": "receiver",
+      "from": [4, 7, 6],
+      "to": [12, 10, 10],
+      "faces": {
+        "north": { "texture": "#particle" },
+        "east": { "texture": "#particle" },
+        "south": { "texture": "#particle" },
+        "west": { "texture": "#particle" },
+        "up": { "texture": "#particle" },
+        "down": { "texture": "#particle" }
+      }
+    },
+    {
+      "name": "upper_receiver",
+      "from": [5, 10, 6.5],
+      "to": [12, 11, 9.5],
+      "faces": {
+        "north": { "texture": "#particle" },
+        "east": { "texture": "#particle" },
+        "south": { "texture": "#particle" },
+        "west": { "texture": "#particle" },
+        "up": { "texture": "#particle" },
+        "down": { "texture": "#particle" }
+      }
+    },
+    {
+      "name": "handguard",
+      "from": [12, 7.5, 6.5],
+      "to": [16, 9.5, 9.5],
+      "faces": {
+        "north": { "texture": "#particle" },
+        "east": { "texture": "#particle" },
+        "south": { "texture": "#particle" },
+        "west": { "texture": "#particle" },
+        "up": { "texture": "#particle" },
+        "down": { "texture": "#particle" }
+      }
+    },
+    {
+      "name": "barrel",
+      "from": [16, 8, 7.25],
+      "to": [22, 9, 8.75],
+      "faces": {
+        "north": { "texture": "#particle" },
+        "east": { "texture": "#particle" },
+        "south": { "texture": "#particle" },
+        "west": { "texture": "#particle" },
+        "up": { "texture": "#particle" },
+        "down": { "texture": "#particle" }
+      }
+    },
+    {
+      "name": "muzzle",
+      "from": [21.5, 7.7, 7],
+      "to": [23, 9.3, 9],
+      "faces": {
+        "north": { "texture": "#particle" },
+        "east": { "texture": "#particle" },
+        "south": { "texture": "#particle" },
+        "west": { "texture": "#particle" },
+        "up": { "texture": "#particle" },
+        "down": { "texture": "#particle" }
+      }
+    },
+    {
+      "name": "stock_connector",
+      "from": [1.5, 7.8, 7],
+      "to": [4, 9.2, 9],
+      "faces": {
+        "north": { "texture": "#particle" },
+        "east": { "texture": "#particle" },
+        "south": { "texture": "#particle" },
+        "west": { "texture": "#particle" },
+        "up": { "texture": "#particle" },
+        "down": { "texture": "#particle" }
+      }
+    },
+    {
+      "name": "stock",
+      "from": [-4, 6.5, 6],
+      "to": [2, 10, 10],
+      "faces": {
+        "north": { "texture": "#particle" },
+        "east": { "texture": "#particle" },
+        "south": { "texture": "#particle" },
+        "west": { "texture": "#particle" },
+        "up": { "texture": "#particle" },
+        "down": { "texture": "#particle" }
+      }
+    },
+    {
+      "name": "grip",
+      "from": [5, 2.5, 6.5],
+      "to": [7.5, 7, 9.5],
+      "rotation": {
+        "origin": [6, 7, 8],
+        "axis": "z",
+        "angle": -22.5
+      },
+      "faces": {
+        "north": { "texture": "#particle" },
+        "east": { "texture": "#particle" },
+        "south": { "texture": "#particle" },
+        "west": { "texture": "#particle" },
+        "up": { "texture": "#particle" },
+        "down": { "texture": "#particle" }
+      }
+    },
+    {
+      "name": "magazine",
+      "from": [8, 2, 6.5],
+      "to": [11, 7, 9.5],
+      "rotation": {
+        "origin": [9.5, 7, 8],
+        "axis": "z",
+        "angle": -22.5
+      },
+      "faces": {
+        "north": { "texture": "#particle" },
+        "east": { "texture": "#particle" },
+        "south": { "texture": "#particle" },
+        "west": { "texture": "#particle" },
+        "up": { "texture": "#particle" },
+        "down": { "texture": "#particle" }
+      }
+    },
+    {
+      "name": "top_rail",
+      "from": [6, 11, 7],
+      "to": [15, 11.5, 9],
+      "faces": {
+        "north": { "texture": "#particle" },
+        "east": { "texture": "#particle" },
+        "south": { "texture": "#particle" },
+        "west": { "texture": "#particle" },
+        "up": { "texture": "#particle" },
+        "down": { "texture": "#particle" }
+      }
+    },
+    {
+      "name": "front_sight",
+      "from": [14, 11.5, 7.25],
+      "to": [14.75, 13, 8.75],
+      "faces": {
+        "north": { "texture": "#particle" },
+        "east": { "texture": "#particle" },
+        "south": { "texture": "#particle" },
+        "west": { "texture": "#particle" },
+        "up": { "texture": "#particle" },
+        "down": { "texture": "#particle" }
+      }
+    }
+  ]
+}
