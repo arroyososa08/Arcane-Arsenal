@@ -1,3 +1,6 @@
 {
-  "item.arcane_arsenal.arcane_rifle": "Arcane Rifle"
+  "item.arcane_arsenal.arcane_rifle": "Arcane Rifle",
+  "item.arcane_arsenal.arcane_rifle_ammo": "Arcane Rifle Ammo",
+  "key.arcane_arsenal.reload": "Reload Weapon",
+  "key.category.arcane_arsenal.controls": "Arcane Arsenal"
 }
