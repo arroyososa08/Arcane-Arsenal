@@ -13,7 +13,7 @@ public class ModItems {
 
     public static final Item ARCANE_RIFLE = register(
             "arcane_rifle",
-            Item::new,
+            ArcaneRifleItem::new,
             new Item.Properties().stacksTo(1)
     );
 
