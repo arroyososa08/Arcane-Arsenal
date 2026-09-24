@@ -30,16 +30,23 @@ public class ArcaneArsenalClient implements ClientModInitializer {
                     )
             );
 
+    private static boolean attackWasDown = false;
+
     @Override
     public void onInitializeClient() {
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
 
-            while (RELOAD_KEY.consumeClick()) {
+            if (client.player == null) {
+                attackWasDown = false;
+                return;
+            }
 
-                if (client.player == null) {
-                    return;
-                }
+            // -------------------------
+            // RELOAD
+            // -------------------------
+
+            while (RELOAD_KEY.consumeClick()) {
 
                 ClientPlayNetworking.send(
                         new ReloadRiflePayload()
@@ -49,6 +56,39 @@ public class ArcaneArsenalClient implements ClientModInitializer {
                         "Arcane Rifle reload requested."
                 );
             }
+
+            // -------------------------
+            // LEFT-CLICK SHOOTING
+            // -------------------------
+
+            boolean attackDown =
+                    client.options.keyAttack.isDown();
+
+            boolean holdingArcaneRifle =
+                    client.player.getMainHandItem().getItem()
+                            instanceof ArcaneRifleItem;
+
+            /*
+             * Fire once when the attack button changes
+             * from released -> pressed.
+             *
+             * The server still controls ammo,
+             * cooldown and damage.
+             */
+            if (holdingArcaneRifle
+                    && attackDown
+                    && !attackWasDown) {
+
+                ClientPlayNetworking.send(
+                        new ShootRiflePayload()
+                );
+
+                ArcaneArsenal.LOGGER.info(
+                        "Arcane Rifle shot requested."
+                );
+            }
+
+            attackWasDown = attackDown;
         });
     }
 }
