@@ -58,8 +58,7 @@ public class ArcaneArsenal implements ModInitializer {
                 }
         );
 
-        // Shooting receiver will be connected
-        // after the rifle shooting method is moved.
+        // Shoot packet receiver.
         ServerPlayNetworking.registerGlobalReceiver(
                 ShootRiflePayload.TYPE,
                 (payload, context) -> {
@@ -72,11 +71,12 @@ public class ArcaneArsenal implements ModInitializer {
                             );
 
                     if (rifle.getItem()
-                            instanceof ArcaneRifleItem) {
+                            instanceof ArcaneRifleItem arcaneRifle) {
 
-                        LOGGER.debug(
-                                "{} requested an Arcane Rifle shot.",
-                                player.getName().getString()
+                        arcaneRifle.shoot(
+                                player.level(),
+                                player,
+                                rifle
                         );
                     }
                 }
