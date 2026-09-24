@@ -1,7 +1,5 @@
 package dev.arcanearsenal;
 
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -18,33 +16,35 @@ public class ArcaneRifleItem extends Item {
     public static final int MAGAZINE_SIZE = 30;
     public static final int MAX_RANGE = 100;
 
-    // 8 damage = 4 hearts before armor/effects.
+    // Temporary damage.
+    // Head/body damage will replace this next.
     public static final float DAMAGE = 8.0F;
 
-    // Minecraft normally runs at 20 ticks per second.
-    // 4 ticks = maximum of about 5 shots per second.
+    // 20 ticks = 1 second.
+    // 4 ticks = about 5 shots per second.
     public static final int FIRE_COOLDOWN_TICKS = 4;
 
     public ArcaneRifleItem(Properties properties) {
         super(properties);
     }
 
-    @Override
-    public InteractionResult use(
+    /*
+     * Shooting is now a separate method.
+     * Right-click no longer fires the rifle.
+     */
+    public void shoot(
             Level level,
             Player player,
-            InteractionHand hand
+            ItemStack rifle
     ) {
 
-        ItemStack rifle = player.getItemInHand(hand);
-
         if (level.isClientSide()) {
-            return InteractionResult.SUCCESS;
+            return;
         }
 
-        // Do not fire while the rifle is cooling down.
+        // Do not fire during the cooldown.
         if (player.getCooldowns().isOnCooldown(rifle)) {
-            return InteractionResult.FAIL;
+            return;
         }
 
         int loadedAmmo = rifle.getOrDefault(
@@ -52,6 +52,7 @@ public class ArcaneRifleItem extends Item {
                 0
         );
 
+        // Empty rifle.
         if (loadedAmmo <= 0) {
 
             ArcaneArsenal.LOGGER.info(
@@ -59,7 +60,7 @@ public class ArcaneRifleItem extends Item {
                     player.getName().getString()
             );
 
-            return InteractionResult.FAIL;
+            return;
         }
 
         // Consume one round.
@@ -74,18 +75,18 @@ public class ArcaneRifleItem extends Item {
                 FIRE_COOLDOWN_TICKS
         );
 
-        // Start of the shot.
+        // Start shot at player's eyes.
         Vec3 start = player.getEyePosition();
 
-        // Direction the player is looking.
+        // Shoot where the player is looking.
         Vec3 direction = player.getLookAngle();
 
-        // Maximum shot distance.
+        // Maximum range.
         Vec3 end = start.add(
                 direction.scale(MAX_RANGE)
         );
 
-        // Search for an entity along the shot path.
+        // Look for an entity along the shot.
         EntityHitResult entityHit =
                 ProjectileUtil.getEntityHitResult(
                         player,
@@ -101,8 +102,8 @@ public class ArcaneRifleItem extends Item {
                         MAX_RANGE * MAX_RANGE
                 );
 
-        // Check for blocks so the rifle cannot
-        // hit entities through walls.
+        // Check blocks so bullets cannot hit
+        // entities through walls.
         HitResult blockHit = level.clip(
                 new net.minecraft.world.level.ClipContext(
                         start,
@@ -149,8 +150,6 @@ public class ArcaneRifleItem extends Item {
                 loadedAmmo - 1,
                 MAGAZINE_SIZE
         );
-
-        return InteractionResult.SUCCESS;
     }
 
     public void reload(
