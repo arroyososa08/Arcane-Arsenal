@@ -23,11 +23,19 @@ public class ArcaneArsenal implements ModInitializer {
         ModComponents.initialize();
         ModItems.initialize();
 
+        // Register reload packet.
         PayloadTypeRegistry.serverboundPlay().register(
                 ReloadRiflePayload.TYPE,
                 ReloadRiflePayload.CODEC
         );
 
+        // Register shoot packet.
+        PayloadTypeRegistry.serverboundPlay().register(
+                ShootRiflePayload.TYPE,
+                ShootRiflePayload.CODEC
+        );
+
+        // Reload packet receiver.
         ServerPlayNetworking.registerGlobalReceiver(
                 ReloadRiflePayload.TYPE,
                 (payload, context) -> {
@@ -35,13 +43,40 @@ public class ArcaneArsenal implements ModInitializer {
                     var player = context.player();
 
                     ItemStack rifle =
-                            player.getItemInHand(InteractionHand.MAIN_HAND);
+                            player.getItemInHand(
+                                    InteractionHand.MAIN_HAND
+                            );
 
-                    if (rifle.getItem() instanceof ArcaneRifleItem arcaneRifle) {
+                    if (rifle.getItem()
+                            instanceof ArcaneRifleItem arcaneRifle) {
 
                         arcaneRifle.reload(
                                 player,
                                 rifle
+                        );
+                    }
+                }
+        );
+
+        // Shooting receiver will be connected
+        // after the rifle shooting method is moved.
+        ServerPlayNetworking.registerGlobalReceiver(
+                ShootRiflePayload.TYPE,
+                (payload, context) -> {
+
+                    var player = context.player();
+
+                    ItemStack rifle =
+                            player.getItemInHand(
+                                    InteractionHand.MAIN_HAND
+                            );
+
+                    if (rifle.getItem()
+                            instanceof ArcaneRifleItem) {
+
+                        LOGGER.debug(
+                                "{} requested an Arcane Rifle shot.",
+                                player.getName().getString()
                         );
                     }
                 }
